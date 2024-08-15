@@ -2,6 +2,7 @@ import websockets
 
 from ws_server.data import ConnectedClients
 from ws_server.config import LoggingWS
+from ws_server.config import Settings
 
 import asyncio
 import logging
@@ -14,6 +15,7 @@ class WebsocketServer:
     def __init__(self):
         self.logging_ws = LoggingWS()
         self.connected_clients = ConnectedClients.clients
+        self.settings = Settings()
 
     async def broadcast(self, message):
         for client in self.connected_clients:
@@ -32,5 +34,9 @@ class WebsocketServer:
                 break
 
     async def start(self):
-        async with websockets.serve(self.ws_server_handler, "", 8001):
+        async with websockets.serve(
+                self.ws_server_handler,
+                host=self.settings.HOST,
+                port=self.settings.PORT
+        ):
             await asyncio.Future()
