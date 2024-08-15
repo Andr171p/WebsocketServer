@@ -1,0 +1,2 @@
+class ConnectedClients:
+    clients = []
