@@ -1,1 +1,1 @@
-WebsocketServer: python main.py
+RegistrationService: uvicorn main:app --reload
