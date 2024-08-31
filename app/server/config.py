@@ -1,5 +1,5 @@
 class Network:
-    host = "34.168.253.122"
+    host = "0.0.0.0"
     port = 8000
 
 

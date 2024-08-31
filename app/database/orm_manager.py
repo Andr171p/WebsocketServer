@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Sequence
 
 from sqlalchemy import select
 
@@ -37,7 +37,7 @@ class ORMManager(DatabaseSessionManager):
             )
             return user.scalars().one()
 
-    async def get_users(self) -> List[UsersModel]:
+    async def get_users(self) -> Sequence[UsersModel]:
         async with self.session() as session:
             users = await session.execute(
                 select(UsersModel)

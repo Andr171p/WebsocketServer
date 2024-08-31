@@ -15,6 +15,16 @@ from app.database.orm_manager import orm_manager
 router = APIRouter()
 
 
+@router.get("/")
+async def get_hello_world() -> JSONResponse:
+    return JSONResponse(
+        content={
+            "status": "ok",
+            "data": "Hello world!"
+        },
+    )
+
+
 @router.get("/{user_id}/", response_model=APIUserResponse)
 async def get_user(user_id: int) -> JSONResponse:
     user = await orm_manager.get_user(user_id=user_id)
@@ -48,8 +58,8 @@ async def get_users() -> JSONResponse:
 
 @router.post("/user/", response_model=APIUserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(user_data: UserCreateRequest) -> JSONResponse:
-    user_candidate = orm_manager.create_user(
-        user_id=int(user_data.user_id),
+    user_candidate = await orm_manager.create_user(
+        user_id=user_data.user_id,
         username=user_data.username,
         telefon=user_data.telefon
     )
