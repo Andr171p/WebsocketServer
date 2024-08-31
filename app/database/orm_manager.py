@@ -51,9 +51,3 @@ class ORMManager(DatabaseSessionManager):
 
 
 orm_manager = ORMManager()
-
-
-'''import asyncio
-orm = ORMManager()
-r = asyncio.run(orm.get_users())
-print(r)'''

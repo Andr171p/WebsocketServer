@@ -1,5 +1,6 @@
 class Network:
-    host = "0.0.0.0"
+    # host = "0.0.0.0"
+    host = "registrationservice-production.up.railway.app"
     port = 8000
 
 
