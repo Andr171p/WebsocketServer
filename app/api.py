@@ -42,7 +42,7 @@ async def get_user(user_id: int) -> JSONResponse:
     )
 
 
-@router.get("/users/", response_model=APIUserListResponse)
+@router.get("/get_users/", response_model=APIUserListResponse)
 async def get_users() -> JSONResponse:
     users = await orm_manager.get_users()
     response_data = [
