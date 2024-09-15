@@ -44,7 +44,7 @@ class ORMManager(DatabaseSessionManager):
             )
             return users.scalars().all()
 
-    async def clear_table(self):
+    async def clear_table(self) -> None:
         async with self.connect() as connection:
             await connection.run_sync(UsersModel.metadata.drop_all)
             await connection.run_sync(UsersModel.metadata.create_all)

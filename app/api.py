@@ -3,10 +3,12 @@ from fastapi.responses import JSONResponse
 
 from app.schemas.api_schemas import (
     APIUserResponse,
-    APIUserListResponse
+    APIUserListResponse,
+    APICheckUserResponse
 )
 from app.schemas.orm_schemas import (
     UserCreateRequest,
+    UserIDCreateRequest,
     UserResponse
 )
 from app.database.orm_manager import orm_manager
@@ -25,9 +27,9 @@ async def get_hello_world() -> JSONResponse:
     )
 
 
-@router.get("/{user_id}/", response_model=APIUserResponse)
-async def get_user(user_id: int) -> JSONResponse:
-    user = await orm_manager.get_user(user_id=user_id)
+@router.post("/get_user/", response_model=APIUserResponse)
+async def get_user(user_data: UserIDCreateRequest) -> JSONResponse:
+    user = await orm_manager.get_user(user_id=user_data.user_id)
     if not user:
         return JSONResponse(
             content={"status": "error", "message": "User not found"},
@@ -56,7 +58,7 @@ async def get_users() -> JSONResponse:
     )
 
 
-@router.post("/user/", response_model=APIUserResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/create_user/", response_model=APIUserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(user_data: UserCreateRequest) -> JSONResponse:
     user_candidate = await orm_manager.create_user(
         user_id=user_data.user_id,
@@ -71,3 +73,22 @@ async def create_user(user_data: UserCreateRequest) -> JSONResponse:
         },
         status_code=status.HTTP_201_CREATED,
     )
+
+
+@router.post("/check_user/", response_model=APICheckUserResponse)
+async def check_user(user_data: UserIDCreateRequest) -> JSONResponse:
+    user = await orm_manager.get_user(user_id=user_data.user_id)
+    if not user:
+        return JSONResponse(
+            content={
+                "status": "ok",
+                "data": False
+            }
+        )
+    else:
+        return JSONResponse(
+            content={
+                "status": "ok",
+                "data": True
+            }
+        )

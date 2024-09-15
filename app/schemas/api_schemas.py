@@ -18,3 +18,8 @@ class APIUserResponse(BaseModel):
 class APIUserListResponse(BaseModel):
     status: Literal['ok'] = 'ok'
     data: list[UserResponse]
+
+
+class APICheckUserResponse(BaseModel):
+    status: Literal['ok'] = 'ok'
+    data: bool

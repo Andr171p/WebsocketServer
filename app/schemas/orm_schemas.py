@@ -7,6 +7,10 @@ class UserCreateRequest(BaseModel):
     telefon: str = Field(max_length=15)
 
 
+class UserIDCreateRequest(BaseModel):
+    user_id: int
+
+
 class UserResponse(BaseModel):
     id: int
     user_id: int
