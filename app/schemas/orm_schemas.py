@@ -18,3 +18,9 @@ class UserResponse(BaseModel):
     telefon: str
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class PhoneResponse(BaseModel):
+    phone: str
+
+    model_config = ConfigDict(from_attributes=True)

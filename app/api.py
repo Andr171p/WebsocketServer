@@ -4,12 +4,14 @@ from fastapi.responses import JSONResponse
 from app.schemas.api_schemas import (
     APIUserResponse,
     APIUserListResponse,
-    APICheckUserResponse
+    APICheckUserResponse,
+    APIPhoneResponse
 )
 from app.schemas.orm_schemas import (
     UserCreateRequest,
     UserIDCreateRequest,
-    UserResponse
+    UserResponse,
+    PhoneResponse
 )
 from app.database.orm_manager import orm_manager
 
@@ -92,3 +94,26 @@ async def check_user(user_data: UserIDCreateRequest) -> JSONResponse:
                 "data": True
             }
         )
+
+
+@router.post("/get_phone/", response_model=PhoneResponse)
+async def get_phone(user_data: UserIDCreateRequest) -> JSONResponse:
+    phone = await orm_manager.get_phone(user_id=user_data.user_id)
+    if phone is not None:
+        return JSONResponse(
+            content={
+                "status": "ok",
+                "data": phone
+            }
+        )
+
+
+@router.get("/clear_table")
+async def clear_table() -> JSONResponse:
+    await orm_manager.clear_table()
+    return JSONResponse(
+        content={
+            "status": "ok",
+            "data": "table was cleared"
+        }
+    )

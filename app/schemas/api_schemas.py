@@ -2,7 +2,10 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.schemas.orm_schemas import UserResponse
+from app.schemas.orm_schemas import (
+    UserResponse,
+    PhoneResponse
+)
 
 
 class APIHelloWorldResponse(BaseModel):
@@ -23,3 +26,8 @@ class APIUserListResponse(BaseModel):
 class APICheckUserResponse(BaseModel):
     status: Literal['ok'] = 'ok'
     data: bool
+
+
+class APIPhoneResponse(BaseModel):
+    status: Literal['ok'] = 'ok'
+    data: str

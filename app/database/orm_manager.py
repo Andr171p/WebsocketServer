@@ -44,6 +44,17 @@ class ORMManager(DatabaseSessionManager):
             )
             return users.scalars().all()
 
+    async def get_phone(self, user_id: int) -> str | None:
+        async with self.session() as session:
+            phone = await session.execute(
+                select(UsersModel.telefon).where(UsersModel.user_id == user_id)
+            )
+            try:
+                return phone.scalars().one()
+            except Exception as _ex:
+                print(_ex)
+                return
+
     async def clear_table(self) -> None:
         async with self.connect() as connection:
             await connection.run_sync(UsersModel.metadata.drop_all)
