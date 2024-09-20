@@ -53,7 +53,19 @@ class ORMManager(DatabaseSessionManager):
                 return phone.scalars().one()
             except Exception as _ex:
                 print(_ex)
-                return
+
+    async def replace_phone(self, user_id: int, phone: str) -> UsersModel | None:
+        async with self.session() as session:
+            user = await session.execute(
+                select(UsersModel).where(UsersModel.user_id == user_id)
+            )
+            user = user.scalars().first()
+            if user:
+                user.telefon = phone
+                await session.commit()
+                return user
+            else:
+                raise Exception("User not found")
 
     async def clear_table(self) -> None:
         async with self.connect() as connection:

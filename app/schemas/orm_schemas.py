@@ -11,6 +11,11 @@ class UserIDCreateRequest(BaseModel):
     user_id: int
 
 
+class ReplacePhoneRequest(BaseModel):
+    user_id: int
+    phone: str
+
+
 class UserResponse(BaseModel):
     id: int
     user_id: int

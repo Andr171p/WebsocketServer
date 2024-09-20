@@ -10,6 +10,7 @@ from app.schemas.api_schemas import (
 from app.schemas.orm_schemas import (
     UserCreateRequest,
     UserIDCreateRequest,
+    ReplacePhoneRequest,
     UserResponse,
     PhoneResponse
 )
@@ -104,6 +105,21 @@ async def get_phone(user_data: UserIDCreateRequest) -> JSONResponse:
             content={
                 "status": "ok",
                 "data": phone
+            }
+        )
+
+
+@router.post("/replace_phone/", response_model=APIUserResponse)
+async def replace_phone(user_data: ReplacePhoneRequest) -> JSONResponse:
+    user = await orm_manager.replace_phone(
+        user_id=user_data.user_id,
+        phone=user_data.phone
+    )
+    if user is not None:
+        return JSONResponse(
+            content={
+                "status": "ok",
+                "data": user
             }
         )
 
