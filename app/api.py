@@ -82,15 +82,15 @@ async def create_user(user_data: UserCreateRequest) -> JSONResponse:
 
 @router.post("/check_user/", response_model=APICheckUserResponse)
 async def check_user(user_data: UserIDCreateRequest) -> JSONResponse:
-    user = await orm_manager.get_user(user_id=user_data.user_id)
     try:
-        if user:
-            return JSONResponse(
-                content={
-                    "status": "ok",
-                    "data": True
-                }
-            )
+        user = await orm_manager.get_user(user_id=user_data.user_id)
+        logger.info(user)
+        return JSONResponse(
+            content={
+                "status": "ok",
+                "data": True
+            }
+        )
     except Exception as _ex:
         logger.info(_ex)
         return JSONResponse(
