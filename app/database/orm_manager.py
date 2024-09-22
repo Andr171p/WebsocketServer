@@ -35,7 +35,10 @@ class ORMManager(DatabaseSessionManager):
             user = await session.execute(
                 select(UsersModel).where(UsersModel.user_id == user_id)
             )
-            return user.scalars().one()
+            if user:
+                return user.scalars().one()
+            else:
+                raise Exception("User not found")
 
     async def get_users(self) -> Sequence[UsersModel]:
         async with self.session() as session:
