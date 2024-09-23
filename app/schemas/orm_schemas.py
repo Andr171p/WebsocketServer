@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class UserCreateRequest(BaseModel):
     user_id: int
     username: str
-    telefon: str = Field(max_length=15)
+    telefon: str = Field(max_length=20)
 
 
 class UserIDCreateRequest(BaseModel):
