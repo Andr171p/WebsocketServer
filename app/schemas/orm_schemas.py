@@ -16,6 +16,10 @@ class ReplacePhoneRequest(BaseModel):
     phone: str
 
 
+class GetUserIdRequest(BaseModel):
+    phone: str
+
+
 class UserResponse(BaseModel):
     id: int
     user_id: int
@@ -27,5 +31,11 @@ class UserResponse(BaseModel):
 
 class PhoneResponse(BaseModel):
     phone: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserIdResponse(BaseModel):
+    user_id: int
 
     model_config = ConfigDict(from_attributes=True)

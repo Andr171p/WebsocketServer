@@ -70,6 +70,16 @@ class ORMManager(DatabaseSessionManager):
             else:
                 raise Exception("User not found")
 
+    async def get_user_id(self, phone: str) -> int | None:
+        async with self.session() as session:
+            user_id = await session.execute(
+                select(UsersModel.user_id).where(UsersModel.telefon == phone)
+            )
+            try:
+                return user_id.scalars().one()
+            except Exception as _ex:
+                print(_ex)
+
     async def clear_table(self) -> None:
         async with self.connect() as connection:
             await connection.run_sync(UsersModel.metadata.drop_all)

@@ -12,7 +12,9 @@ from app.schemas.orm_schemas import (
     UserIDCreateRequest,
     ReplacePhoneRequest,
     UserResponse,
-    PhoneResponse
+    PhoneResponse,
+    GetUserIdRequest,
+    UserIdResponse
 )
 from app.database.orm_manager import orm_manager
 
@@ -124,6 +126,18 @@ async def replace_phone(user_data: ReplacePhoneRequest) -> JSONResponse:
             content={
                 "status": "ok",
                 "data": user
+            }
+        )
+
+
+@router.post("/get_user_id/", response_model=UserResponse)
+async def get_user_id(user_data: GetUserIdRequest) -> JSONResponse:
+    user_id = await orm_manager.get_user_id(phone=user_data.phone)
+    if user_id is not None:
+        return JSONResponse(
+            content={
+                "status": "ok",
+                "data": user_id
             }
         )
 
