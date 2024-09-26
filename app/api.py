@@ -121,13 +121,13 @@ async def replace_phone(user_data: ReplacePhoneRequest) -> JSONResponse:
         user_id=user_data.user_id,
         phone=user_data.phone
     )
-    if user is not None:
-        return JSONResponse(
-            content={
-                "status": "ok",
-                "data": user
-            }
-        )
+    response_model = UserResponse.model_validate(user)
+    return JSONResponse(
+        content={
+            "status": "ok",
+            "data": response_model
+        }
+    )
 
 
 @router.post("/get_user_id/", response_model=UserResponse)
