@@ -125,7 +125,7 @@ async def replace_phone(user_data: ReplacePhoneRequest) -> JSONResponse:
     return JSONResponse(
         content={
             "status": "ok",
-            "data": response_model
+            "data": response_model.model_dump()
         }
     )
 
